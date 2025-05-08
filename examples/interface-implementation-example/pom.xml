@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <groupId>de.natalie</groupId>
+    <artifactId>interface-implementation-example-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Interface Implementation Example - Parent</name>
+
+    <modules>
+        <module>deployment</module>
+        <module>runtime</module>
+    </modules>
+
+    <properties>
+        <!-- project properties -->
+        <project.encoding>UTF-8</project.encoding>
+        <maven.compiler.release>25</maven.compiler.release>
+        <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+
+        <!-- dependency versions -->
+        <quarkus.version>3.22.2</quarkus.version>
+        <quarkus-class-file-api-extension.version>1.0.0-SNAPSHOT</quarkus-class-file-api-extension.version>
+
+        <!-- plugin versions -->
+        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
+        <failsafe-plugin.version>${surefire-plugin.version}</failsafe-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.natalie</groupId>
+                <artifactId>interface-implementation-example</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.natalie</groupId>
+                <artifactId>quarkus-class-file-api-extension</artifactId>
+                <version>${quarkus-class-file-api-extension.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.natalie</groupId>
+                <artifactId>quarkus-class-file-api-extension-deployment</artifactId>
+                <version>${quarkus-class-file-api-extension.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${quarkus.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire-plugin.version}</version>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                            <maven.home>${maven.home}</maven.home>
+                            <maven.repo>${settings.localRepository}</maven.repo>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${failsafe-plugin.version}</version>
+                    <configuration>
+                        <systemPropertyVariables>
+                            <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                            <maven.home>${maven.home}</maven.home>
+                            <maven.repo>${settings.localRepository}</maven.repo>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler-plugin.version}</version>
+                    <configuration>
+                        <parameters>true</parameters>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

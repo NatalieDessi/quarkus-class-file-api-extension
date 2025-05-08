@@ -5,10 +5,8 @@ import io.quarkus.arc.deployment.GeneratedBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
-import jakarta.enterprise.context.ApplicationScoped;
 
 import java.lang.classfile.ClassFile;
-import java.lang.constant.ClassDesc;
 import java.util.List;
 
 import static de.natalie.ProcessorUtils.generateConstructor;
