@@ -18,7 +18,7 @@
     <properties>
         <!-- project properties -->
         <project.encoding>UTF-8</project.encoding>
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 

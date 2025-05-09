@@ -1,5 +1,6 @@
 package de.example;
 
+import de.example.runtime.Producer;
 import io.quarkus.arc.Arc;
 import io.quarkus.test.QuarkusUnitTest;
 import org.junit.jupiter.api.Test;

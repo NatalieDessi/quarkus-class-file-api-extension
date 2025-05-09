@@ -1,4 +1,4 @@
-package de.natalie;
+package de.natalie.classfile.deployment.utils;
 
 import io.quarkus.arc.Unremovable;
 import lombok.experimental.UtilityClass;

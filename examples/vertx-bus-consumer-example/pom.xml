@@ -18,11 +18,12 @@
     <properties>
         <!-- project properties -->
         <project.encoding>UTF-8</project.encoding>
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.release>24</maven.compiler.release>
         <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
 
         <!-- dependency versions -->
+        <lombok.version>1.18.38</lombok.version>
         <quarkus.version>3.22.2</quarkus.version>
         <quarkus-class-file-api-extension.version>1.0.0-SNAPSHOT</quarkus-class-file-api-extension.version>
 
@@ -40,6 +41,11 @@
                 <version>${quarkus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.natalie</groupId>

@@ -1,6 +1,6 @@
-package de.natalie;
+package de.natalie.classfile.deployment;
 
-import de.natalie.builditem.GeneratedClassFileBeanBuildItem;
+import de.natalie.classfile.deployment.builditem.GeneratedClassFileBeanBuildItem;
 import io.quarkus.arc.deployment.GeneratedBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -9,8 +9,8 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import java.lang.classfile.ClassFile;
 import java.util.List;
 
-import static de.natalie.ProcessorUtils.generateConstructor;
-import static de.natalie.ProcessorUtils.generateScope;
+import static de.natalie.classfile.deployment.utils.ProcessorUtils.generateConstructor;
+import static de.natalie.classfile.deployment.utils.ProcessorUtils.generateScope;
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
 

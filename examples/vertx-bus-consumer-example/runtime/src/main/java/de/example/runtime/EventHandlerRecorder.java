@@ -1,4 +1,4 @@
-package de.example;
+package de.example.runtime;
 
 import io.quarkus.arc.Arc;
 import io.quarkus.runtime.annotations.Recorder;
