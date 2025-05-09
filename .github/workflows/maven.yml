@@ -12,7 +12,7 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
       - name: Build extension
-        run: mvn verify --batch-mode
+        run: mvn verify --batch-mode --no-transfer-progress
 
   test:
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
           java-version: '24'
           distribution: 'temurin'
       - name: Test extension
-        run: mvn test --batch-mode
+        run: mvn test --batch-mode --no-transfer-progress
 
   release:
     needs: [ build, test ]
@@ -45,6 +45,4 @@ jobs:
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SERVER_USERNAME: ${{ github.actor }}
-          SERVER_PASSWORD: $${{ secrets.GITHUB_TOKEN }}
         run: yarn semantic-release

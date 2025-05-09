@@ -33,8 +33,10 @@ export default {
                 'CHANGELOG.md'
             ],
         } ],
-        [ 'semantic-release-maven', {
-            serverId: 'https://maven.pkg.github.com/NatalieDessi/quarkus-class-file-api-extension'
+        [ '@terrestris/maven-semantic-release', {
+            settingsPath: 'settings.xml',
+            processAllModules: true,
+            updateSnapshotVersion: true
         } ]
     ]
 };
