@@ -1,5 +1,5 @@
 name: Quarkus Class File Api Extension
-description: Extension for generating byte code with the Java 25 Class-File API (JEP 484)
+description: Extension for generating byte code with the Java 24 Class-File API (JEP 484)
 metadata:
   short-name: quarkus-cf-api
   keywords:

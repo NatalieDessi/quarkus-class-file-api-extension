@@ -1,0 +1,50 @@
+name: Quarkus Class-File API extension Maven workflow
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          cache: maven
+          java-version: '24'
+          distribution: 'temurin'
+      - name: Build extension
+        run: mvn verify --batch-mode
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          cache: maven
+          java-version: '24'
+          distribution: 'temurin'
+      - name: Test extension
+        run: mvn test --batch-mode
+
+  release:
+    needs: [ build, test ]
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      packages: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn
+      - name: Semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SERVER_USERNAME: ${{ github.actor }}
+          SERVER_PASSWORD: $${{ secrets.GITHUB_TOKEN }}
+        run: yarn semantic-release
