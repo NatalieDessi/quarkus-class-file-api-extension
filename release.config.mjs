@@ -27,6 +27,7 @@ export default {
         } ],
         [ '@semantic-release/git', {
             assets: [
+                'yarn.lock',
                 'pom.xml',
                 '**/pom.xml',
                 'CHANGELOG.md'
