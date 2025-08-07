@@ -87,6 +87,7 @@ class ExtensionProcessor {
         generatedClasses.produce(GeneratedClassFileBeanBuildItem.builder()
                                                                 .unremovable(true)
                                                                 .generateConstructor(true)
+                                                                .outputGeneratedFile(true)
                                                                 .scope(ApplicationScoped.class)
                                                                 .classDesc(ClassDesc.of("de.example.Ping"))
                                                                 .classBuilder(ExtensionProcessor::buildInvoker)
