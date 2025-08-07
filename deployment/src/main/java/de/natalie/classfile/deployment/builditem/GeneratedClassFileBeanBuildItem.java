@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import java.lang.annotation.Annotation;
 import java.lang.classfile.ClassBuilder;
 import java.lang.constant.ClassDesc;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -59,6 +61,12 @@ public final class GeneratedClassFileBeanBuildItem extends MultiBuildItem {
     @Builder.Default private final Class<? extends Annotation> scope = Dependent.class;
 
     /**
+     * Methods that should be annotated.
+     * Defaults to {@code Dependent} if not explicitly set.
+     */
+    @Builder.Default private final Map<String, Class<? extends Annotation>> annotatedMethods = new HashMap<>();
+
+    /**
      * Whether a default (no-arg) constructor should be automatically generated.
      * This is useful if the generated class does not declare its own constructor.
      */
@@ -81,4 +89,11 @@ public final class GeneratedClassFileBeanBuildItem extends MultiBuildItem {
      * This is typically a method reference such as {@code MyProcessor::buildMyHandler}.
      */
     private final Consumer<ClassBuilder> classBuilder;
+
+    /**
+     * If {@code true}, the extension will output the result into a file.
+     * The output files can be found in the generated-classes directory of your build.
+     * during unused bean elimination.
+     */
+    private final boolean outputGeneratedFile;
 }

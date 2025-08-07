@@ -1,18 +1,14 @@
 package de.example.deployment;
 
 import de.example.runtime.EventHandler;
-import de.example.runtime.EventHandlerRecorder;
 import de.natalie.classfile.deployment.builditem.GeneratedClassFileBeanBuildItem;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.ArcContainer;
 import io.quarkus.arc.InstanceHandle;
-import io.quarkus.arc.deployment.SyntheticBeansRuntimeInitBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.annotations.Consume;
-import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
-import io.quarkus.runtime.annotations.Recorder;
+import io.quarkus.runtime.Startup;
 import io.vertx.mutiny.core.eventbus.EventBus;
 import io.vertx.mutiny.core.eventbus.Message;
 import io.vertx.mutiny.core.eventbus.MessageConsumer;
@@ -23,12 +19,12 @@ import java.lang.classfile.ClassBuilder;
 import java.lang.classfile.CodeBuilder;
 import java.lang.constant.ClassDesc;
 import java.lang.constant.MethodTypeDesc;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import static de.natalie.classfile.deployment.utils.ClassFileUtils.arrayClassDesc;
 import static de.natalie.classfile.deployment.utils.ClassFileUtils.classDesc;
 import static de.natalie.classfile.deployment.utils.ClassFileUtils.classEntry;
-import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 import static java.lang.classfile.ClassFile.ACC_PUBLIC;
 import static java.lang.constant.ConstantDescs.CD_Class;
 import static java.lang.constant.ConstantDescs.CD_Object;
@@ -211,32 +207,13 @@ class ExtensionProcessor {
     @BuildStep
     void produceClasses(BuildProducer<GeneratedClassFileBeanBuildItem> generatedClasses) {
         generatedClasses.produce(GeneratedClassFileBeanBuildItem.builder()
+                                                                .outputGeneratedFile(true)
                                                                 .unremovable(true)
                                                                 .generateConstructor(true)
                                                                 .scope(ApplicationScoped.class)
+                                                                .annotatedMethods(Map.of("registerHandler", Startup.class))
                                                                 .classBuilder(ExtensionProcessor::buildHandler)
                                                                 .classDesc(ClassDesc.of("de.example.deployment.ReplyHandler"))
                                                                 .build());
-    }
-
-    /**
-     * Registers all event consumers at runtime using the {@link EventHandlerRecorder}.
-     * <p>
-     * This method is executed during {@code RUNTIME_INIT} phase and ensures that any generated
-     * {@code ReplyHandler} beans are activated and registered on the event bus.
-     * <p>
-     * It consumes {@link SyntheticBeansRuntimeInitBuildItem} to guarantee execution after synthetic beans
-     * have been initialized, ensuring that all generated handlers are present before registration.
-     *
-     * <p>The actual registration logic is delegated to a {@link Recorder} class, which typically
-     * uses runtime APIs (e.g., {@code Arc.container()}, {@code EventBus}) to wire up the handler logic.
-     *
-     * @param recorder the {@link EventHandlerRecorder} responsible for performing runtime registration logic
-     */
-    @BuildStep
-    @Record(RUNTIME_INIT)
-    @Consume(SyntheticBeansRuntimeInitBuildItem.class)
-    void registerConsumers(EventHandlerRecorder recorder) {
-        recorder.registerConsumers();
     }
 }
